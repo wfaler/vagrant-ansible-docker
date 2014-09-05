@@ -29,13 +29,14 @@
       shell: update-rc.d docker.io defaults
 
     - name: install ansible docker plugin
+      ignore_errors: yes
       shell: ansible-galaxy install angstwad.docker_ubuntu
 
     - name: copy over the Dockerfile
-      action: copy src=config/Dockerfile dest=~/Dockerfile
+      action: copy src=conf/Dockerfile dest=/home/vagrant/Dockerfile
 
     - name: copy over the Ansible file with which we provision the Docker container
-      action: copy src=config/provision.yml dest=~/provision.yml
+      action: copy src=conf/provision.yml dest=/home/vagrant/provision.yml
 
     - name: copy over the inventory file for Dockers Ansible provisioning
-      action: copy src=config/inventory-file dest=~/inventory-file
+      action: copy src=conf/inventory-file dest=/home/vagrant/inventory-file
