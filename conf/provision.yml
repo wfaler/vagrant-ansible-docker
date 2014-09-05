@@ -1,0 +1,11 @@
+---
+- hosts: local
+
+  tasks:
+    - name: ensure apt cache is updated
+      action: apt update_cache=yes
+
+    - name: ensure all software is installed
+      action: apt name={{item}}
+      with_items:
+        - nginx

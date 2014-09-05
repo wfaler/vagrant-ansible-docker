@@ -1,0 +1,41 @@
+---
+- hosts: all
+  sudo: yes
+  # run with ansible-playbook register-key.yml -i hosts --ask-pass --ask-sudo-pass -u [your username] --extra-vars "user=[your username]"
+
+  tasks:
+    - name: add user ubuntu
+      user: name=ubuntu
+            groups="admin,ubuntu"
+
+    - name: register key for user ubuntu
+      action: authorized_key user='ubuntu' key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+    - name: ensure apt cache is updated
+      action: apt update_cache=yes
+      
+    - name: ensure all software is installed
+      action: apt name={{item}}
+      with_items:
+        - emacs24
+        - tmux
+        - docker.io
+        - ansible
+
+    - name: ensure docker is linked
+      shell: ln -sf /usr/bin/docker.io /usr/local/bin/docker creates=/usr/local/bin/docker
+
+    - name: ensure docker is started on startup
+      shell: update-rc.d docker.io defaults
+
+    - name: install ansible docker plugin
+      shell: ansible-galaxy install angstwad.docker_ubuntu
+
+    - name: copy over the Dockerfile
+      action: copy src=config/Dockerfile dest=~/Dockerfile
+
+    - name: copy over the Ansible file with which we provision the Docker container
+      action: copy src=config/provision.yml dest=~/provision.yml
+
+    - name: copy over the inventory file for Dockers Ansible provisioning
+      action: copy src=config/inventory-file dest=~/inventory-file
