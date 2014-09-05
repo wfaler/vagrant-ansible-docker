@@ -1,4 +1,6 @@
 ## Install
+The following assumes you already have _vagrant_ and _ansible_ installed on your local machine.
+
 On your local machine, run:
 
 	vagrant up
