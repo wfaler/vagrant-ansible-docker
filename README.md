@@ -1,4 +1,6 @@
 ## Install
+The following assumes you already have _vagrant_ and _ansible_ installed on your local machine.
+
 On your local machine, run:
 
 	vagrant up
@@ -19,5 +21,7 @@ After this, you'll get an image id, which you can use in the following command:
 
 	sudo docker run -d -p 80:80 -v /home/vagrant/html:/usr/share/nginx/html [image id]
 
+
 This will start the image in a new Docker container in daemon mode (it will not die straight after starting nginx), with the container port 80 mapped to the hosts port 80.
 Further more, it will mount the /home/vagrant/html directory on the host as the nginx html directory on the container.
+
