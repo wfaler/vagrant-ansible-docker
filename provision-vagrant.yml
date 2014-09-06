@@ -20,17 +20,19 @@
         - emacs24
         - tmux
         - docker.io
-        - ansible
+        - curl
 
     - name: ensure docker is linked
       shell: ln -sf /usr/bin/docker.io /usr/local/bin/docker creates=/usr/local/bin/docker
 
+    - name: create directory to be shared between host and container
+      shell: mkdir -p /home/vagrant/html creates=/home/vagrant/html
+
     - name: ensure docker is started on startup
       shell: update-rc.d docker.io defaults
 
-    - name: install ansible docker plugin
-      ignore_errors: yes
-      shell: ansible-galaxy install angstwad.docker_ubuntu
+    - name: copy over the index.html file to be served by the Docker container
+      action: copy src=conf/index.html dest=/home/vagrant/html/index.html
 
     - name: copy over the Dockerfile
       action: copy src=conf/Dockerfile dest=/home/vagrant/Dockerfile

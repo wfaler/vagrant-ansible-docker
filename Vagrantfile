@@ -12,10 +12,10 @@ Vagrant.configure("2") do |config|
   # Every Vagrant virtual environment requires a box to build off of.
 #  config.vm.box = "ubuntu/trusty64"
 
-  config.vm.define "docker" do |jenkins|
-    jenkins.vm.box = "ubuntu/trusty64"
-    jenkins.vm.network "private_network", ip: "192.168.93.135"
-    jenkins.vm.provider "virtualbox" do |v|
+  config.vm.define "docker" do |docker|
+    docker.vm.box = "ubuntu/trusty64"
+    docker.vm.network "private_network", ip: "192.168.93.255"
+    docker.vm.provider "virtualbox" do |v|
       v.memory = 2048
       v.cpus = 1
     end

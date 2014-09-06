@@ -10,5 +10,7 @@ RUN apt-get install -y ansible
 add inventory-file /etc/ansible/hosts
 ADD provision.yml provision.yml
 RUN ansible-playbook provision.yml -c local
-RUN echo 'Hi, I am in your container, running in your dockers' > /usr/share/nginx/html/index.html
+RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+
 EXPOSE 80
+CMD ["nginx"]
